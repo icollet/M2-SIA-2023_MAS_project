@@ -10,6 +10,7 @@ CONFIG = {
     "network_size": {"x": 4, "y": 3},
     "total_ticks": 100,
     "probabilities" : {"p_inf" : 0.2, "p_rep" : 0.2, "p_break" : 0.2},
+    "seed" : 10,
     "vehicles": [
         {"id": 1, "position": (0, 0), "state": "Not infected"},
         {"id": 2, "position": (1, 2), "state": "Infected"},
@@ -25,10 +26,10 @@ if __name__ == "__main__":
     for tick in range(CONFIG["total_ticks"]):
         state_counts = environment.update_state()
         statistics[tick] = state_counts
+        vehicles = environment.vehicles
         
 
         # Access the state counts for the current tick
-        print(f"Tick {tick}: {state_counts}")
         # ...
 
     # Plotting the statistics
