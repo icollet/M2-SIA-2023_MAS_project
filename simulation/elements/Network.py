@@ -12,13 +12,19 @@ class Network:
         cell1.add_neighbor(cell2)
         cell2.add_neighbor(cell1)
 
+    def get_cell(self, x, y):
+        for cell in self.cells:
+            if cell.x == x and cell.y == y:
+                return cell
+        return None
+
     @staticmethod
     def initiate_network(x, y):
         network = Network()
 
         for i in range(x):
             for j in range(y):
-                cell = Cell(i, j)
+                cell = Cell(i, j, "Road", None, 0.25)
                 network.add_cell(cell)
 
                 if i > 0:

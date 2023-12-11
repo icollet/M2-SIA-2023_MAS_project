@@ -18,8 +18,12 @@ class Environment:
         # Create the vehicles based on the config
         vehicles = []
         for vehicle_config in config["vehicles"]:
-            vehicle = Vehicle(vehicle_config["id"], vehicle_config["position"], vehicle_config["state"])
+            position = vehicle_config["position"]
+            vehicle = Vehicle(vehicle_config["id"], position, vehicle_config["state"])
             vehicles.append(vehicle)
+            cell = self.network.get_cell(position[0], position[1])
+            if cell:
+               cell.vehicle = vehicle
         return vehicles
 
     def update_state(self):

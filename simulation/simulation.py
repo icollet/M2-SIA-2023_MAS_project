@@ -18,9 +18,12 @@ CONFIG = {
 
 if __name__ == "__main__":
     environment = Environment(CONFIG)
+    statistics = {}
 
     for tick in range(CONFIG["total_ticks"]):
         state_counts = environment.update_state()
+        statistics[tick] = state_counts
+        
         # Access the state counts for the current tick
         print(f"Tick {tick}: {state_counts}")
         # ...
