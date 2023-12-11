@@ -3,6 +3,8 @@ from elements.Network import Network
 from elements.Vehicle import Vehicle
 from elements.Environment import Environment
 
+import matplotlib.pyplot as plt
+
 
 CONFIG = {
     "network_size": {"x": 4, "y": 3},
@@ -24,8 +26,32 @@ if __name__ == "__main__":
         state_counts = environment.update_state()
         statistics[tick] = state_counts
         
+
         # Access the state counts for the current tick
         print(f"Tick {tick}: {state_counts}")
         # ...
 
+    # Plotting the statistics
+    x = []
+    infected = []
+    not_infected = []
+    repaired = []
+    broken_down = []
+    for tick in range(CONFIG["total_ticks"]):
+        x.append(tick)
+        infected.append(statistics[tick]["Infected"])
+        not_infected.append(statistics[tick]["Not infected"])
+        repaired.append(statistics[tick]["Repaired"])
+        broken_down.append(statistics[tick]["Broken down"])
 
+    plt.plot(x, infected, label='Infected')
+    plt.plot(x, not_infected, label='Not infected')
+    plt.plot(x, repaired, label='Repaired')
+    plt.plot(x, broken_down, label='Broken down')
+    
+    plt.xlabel('tick')
+    plt.ylabel('number of vehicles')
+    plt.title('State of the vehicles in the network')
+    plt.legend()
+
+    plt.show()
