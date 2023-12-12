@@ -67,12 +67,13 @@ class Environment:
                   choice = special_destinations[i]
 
             if not choice:
-               choice = random.choice(valid_destinations)
+               if len(valid_destinations) > 0:
+                choice = random.choice(valid_destinations)
 
-                # Move the vehicle to the destination cell
-               current_cell.vehicle = None
-               choice.vehicle = vehicle
-               vehicle.x, vehicle.y = choice.x, choice.y
+                    # Move the vehicle to the destination cell
+                current_cell.vehicle = None
+                choice.vehicle = vehicle
+                vehicle.x, vehicle.y = choice.x, choice.y
 
         # Store the state counts for the current tick
         self.tick_stats["Infected"].append(state_counts["Infected"])
