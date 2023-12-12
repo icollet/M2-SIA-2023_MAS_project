@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 CONFIG = {
     "network_size": {"x": 4, "y": 3},
     "total_ticks": 100,
-    "probabilities" : {"p_inf" : 0.2, "p_rep" : 0.2, "p_break" : 0.2},
+    "probabilities" : {"p_inf" : 0.2, "p_rep" : 0.0, "p_break" : 0.1},
     "seed" : 10,
     "vehicles": [
         {"id": 1, "position": (0, 0), "state": "Not infected"},

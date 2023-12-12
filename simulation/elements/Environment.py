@@ -12,6 +12,9 @@ class Environment:
         self.tick_stats = {"Infected": [], "Not infected": [], "Repaired": [], "Broken down": []}
         self.seed = config["seed"]
         random.seed(self.seed)
+        self.p_infected = config["probabilities"]["p_inf"]
+        self.p_repaired = config["probabilities"]["p_rep"]
+        self.p_break = config["probabilities"]["p_break"]
 
     def create_network(self, config):
         # Create the network based on the config
@@ -41,7 +44,7 @@ class Environment:
             "Broken down": 0
         }
 
-      
+        # Vehicles movements
         for vehicle in self.vehicles:
             state = vehicle.get_state()
             state_counts[state] += 1
@@ -74,6 +77,33 @@ class Environment:
                 current_cell.vehicle = None
                 choice.vehicle = vehicle
                 vehicle.x, vehicle.y = choice.x, choice.y
+
+        # Format [(Vehicle, new_state)] so all the vehicles are updated together
+        apply_list = []
+        # Vehicles behaviours
+        for vehicle in self.vehicles:
+            state = vehicle.get_state()
+            if state != "Broken down":
+                state = vehicle.get_state()
+                neighbouring_cells = self.network.get_cell(vehicle.x, vehicle.y).neighbors
+                neighbouring_vehicles = []
+                for cell in neighbouring_cells:
+                    if cell.vehicle:
+                        neighbouring_vehicles.append(vehicle)
+                for n_vehicle in neighbouring_vehicles:
+                    v_state = n_vehicle.get_state()
+                    if state == "Not infected" or state == "Repaired":
+                        if v_state == "Infected":
+                            if random.random() <= self.p_infected:
+                                apply_list.append((vehicle, "Infected"))
+                if state == "Infected":
+                    rest = 1 - (self.p_repaired + self.p_break)
+                    results = ["Repaired"] * int(self.p_repaired * 100) + ["Broken down"] * int(self.p_break * 100) + ["Infected"] * int(rest * 100)
+                    apply_list.append((vehicle, random.choice(results)))
+
+        # Apply the new state
+        for change in apply_list:
+            change[0].update_state(change[1])
 
         # Store the state counts for the current tick
         self.tick_stats["Infected"].append(state_counts["Infected"])
