@@ -4,6 +4,7 @@ from elements.Cell import Cell
 class Network:
     def __init__(self):
         self.cells = []
+        self.matrix_state = None
 
     def add_cell(self, cell):
         self.cells.append(cell)
@@ -17,7 +18,7 @@ class Network:
             if cell.x == x and cell.y == y:
                 return cell
         return None
-
+    
     @staticmethod
     def initiate_network(x, y):
         network = Network()
@@ -26,10 +27,14 @@ class Network:
             for j in range(y):
                 cell = Cell(i, j, "Road", None, 0.25)
                 network.add_cell(cell)
-
+                
                 if i > 0:
                     network.connect_cells(cell, network.cells[(i - 1) * y + j])
                 if j > 0:
                     network.connect_cells(cell, network.cells[i * y + (j - 1)])
 
         return network
+    
+
+
+

@@ -4,7 +4,6 @@ from elements.Vehicle import Vehicle
 
 import random
 
-
 class Environment:
     def __init__(self, config):
         self.network = self.create_network(config)
@@ -18,7 +17,8 @@ class Environment:
 
     def create_network(self, config):
         # Create the network based on the config
-        network = Network.initiate_network(config["network_size"]["x"], config["network_size"]["y"])
+        network = Network.initiate_network(config["network_size"]["x"], 
+                                            config["network_size"]["y"])
         return network
 
     def create_vehicles(self, config):

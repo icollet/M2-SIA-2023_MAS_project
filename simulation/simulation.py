@@ -4,21 +4,20 @@ from elements.Vehicle import Vehicle
 from elements.Environment import Environment
 
 import matplotlib.pyplot as plt
+import random
 
+
+import random
 
 CONFIG = {
-    "network_size": {"x": 4, "y": 3},
+    "network_size": {"x": 100, "y": 100},
     "total_ticks": 100,
-    "probabilities" : {"p_inf" : 0.2, "p_rep" : 0.0, "p_break" : 0.1},
+    "probabilities" : {"p_inf" : 0.2, "p_rep" : 0.3, "p_break" : 0.7},
     "seed" : 10,
     "vehicles": [
-        {"id": 1, "position": (0, 0), "state": "Not infected"},
-        {"id": 2, "position": (1, 2), "state": "Infected"},
-        # ...
+        {"id": i+1, "position": (i%100, i//100), "state": random.choice(["Not infected", "Infected"])} for i in range(50)
     ]
 }
-
-
 if __name__ == "__main__":
     environment = Environment(CONFIG)
     statistics = {}
@@ -27,7 +26,8 @@ if __name__ == "__main__":
         state_counts = environment.update_state()
         statistics[tick] = state_counts
         vehicles = environment.vehicles
-        
+        cells_list = environment.network.cells
+
 
         # Access the state counts for the current tick
         # ...
