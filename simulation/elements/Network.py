@@ -34,7 +34,7 @@ class Network:
                 if state == "Infected":
                     print("I", end=" ")
                 elif state == "Not infected":
-                    print("NI", end=" ")
+                    print("N", end=" ")
                 elif state == "Repaired":
                     print("R", end=" ")
                 elif state == "Broken down":
