@@ -2,9 +2,10 @@ from elements.Cell import Cell
 
 
 class Network:
-    def __init__(self):
+    def __init__(self, dims):
         self.cells = []
         self.matrix_state = None
+        self.dims = dims
 
     def add_cell(self, cell):
         self.cells.append(cell)
@@ -19,9 +20,31 @@ class Network:
                 return cell
         return None
     
+    def print_cell_content(self):
+        i = 0
+        for cell in self.cells:
+            if i % self.dims[0] == 0:
+                print()
+            i += 1
+            vehicle = cell.vehicle
+            if vehicle is None:
+                print("x", end=" ")
+            else:
+                state = vehicle.get_state()
+                if state == "Infected":
+                    print("I", end=" ")
+                elif state == "Not infected":
+                    print("NI", end=" ")
+                elif state == "Repaired":
+                    print("R", end=" ")
+                elif state == "Broken down":
+                    print("B", end=" ")
+            
+        print()
+
     @staticmethod
     def initiate_network(x, y):
-        network = Network()
+        network = Network((x, y))
 
         for i in range(x):
             for j in range(y):

@@ -50,6 +50,7 @@ class Environment:
             state_counts[state] += 1
 
             # Get the current cell and its neighbors
+            
             current_cell = self.network.get_cell(vehicle.x, vehicle.y)
             neighbors = self.network.get_cell(vehicle.x, vehicle.y).neighbors
 

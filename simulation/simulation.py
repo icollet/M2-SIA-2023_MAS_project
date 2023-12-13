@@ -10,12 +10,12 @@ import random
 import random
 
 CONFIG = {
-    "network_size": {"x": 100, "y": 100},
+    "network_size": {"x": 20, "y": 20},
     "total_ticks": 100,
     "probabilities" : {"p_inf" : 0.2, "p_rep" : 0.3, "p_break" : 0.7},
     "seed" : 10,
     "vehicles": [
-        {"id": i+1, "position": (i%100, i//100), "state": random.choice(["Not infected", "Infected"])} for i in range(50)
+        {"id": i+1, "position": (i%20, i//20), "state": random.choice(["Not infected", "Infected"])} for i in range(40)
     ]
 }
 if __name__ == "__main__":
@@ -23,6 +23,8 @@ if __name__ == "__main__":
     statistics = {}
 
     for tick in range(CONFIG["total_ticks"]):
+        print("STATE AT TICK :", tick)
+        environment.network.print_cell_content()
         state_counts = environment.update_state()
         statistics[tick] = state_counts
         vehicles = environment.vehicles
