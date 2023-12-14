@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import random
 
 import time
+import json
 
 CONFIG = {
     "network_size": {"x": 15, "y": 15},
@@ -21,6 +22,13 @@ CONFIG = {
         # {"id": i+1, "position": (i%20, i//20), "state": random.choice(["Not infected", "Infected"])} for i in range(40)
     ]
 }
+
+def write_config(config):
+    # Specify the file path
+    file_path = "./config_network.json"
+    # Write the dictionary to JSON file
+    with open(file_path, "w") as json_file:
+        json.dump(config, json_file)
 
 
 def generate_vehicles(num_vehicles, infection_rate, grid_size):
@@ -64,6 +72,7 @@ def launch():
         infection_rate = float(infection_rate_entry.get())
         vehicles = generate_vehicles(num_vehicles, infection_rate, app.grid_size)
         CONFIG["vehicles"] = vehicles
+        write_config(CONFIG)
 
         environment = Environment(CONFIG)
         statistics = {}
@@ -85,7 +94,7 @@ def loop(environment, statistics, app):
         state_counts = environment.update_state()
         statistics[tick] = state_counts
         vehicles = environment.vehicles
-        print(len(vehicles))
+        print("number of vehicles ", len(vehicles))
         cells_list = environment.network.cells
 
         app.update_vehicles(vehicles)
