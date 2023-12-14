@@ -48,6 +48,7 @@ class Network:
 
         for i in range(x):
             for j in range(y):
+                # if special cell (schools, etc.), the proability should be higher
                 cell = Cell(i, j, "Road", None, 0.25)
                 network.add_cell(cell)
                 

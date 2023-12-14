@@ -15,7 +15,7 @@ CONFIG = {
     "network_size": {"x": 15, "y": 15},
     "delay": 0.5,
     "total_ticks": 100,
-    "probabilities" : {"p_inf" : 0.9, "p_rep" : 0, "p_break" : 0},
+    "probabilities" : {"p_inf" : 0.9, "p_rep" : 0.5, "p_break" : 0.5},
     "seed" : 10,
     "vehicles": [
         # {"id": i+1, "position": (i%20, i//20), "state": random.choice(["Not infected", "Infected"])} for i in range(40)
@@ -34,6 +34,7 @@ def generate_vehicles(num_vehicles, infection_rate, grid_size):
         cells.remove(cell)
         vehicles.append({"id": i+1, "position": cell, "state": "Infected"})
         i += 1
+        
     while i < num_vehicles:
         cell = random.choice(cells)
         cells.remove(cell)
@@ -50,9 +51,11 @@ def launch():
     app = VehicleGridApp(root)
     app.pack()
 
+    # first param
     num_vehicles_entry = tk.Entry(root)
     num_vehicles_entry.pack()
 
+    # second param
     infection_rate_entry = tk.Entry(root)
     infection_rate_entry.pack()
 

@@ -64,15 +64,21 @@ class Environment:
                if neighbor.type == "Road" and neighbor.vehicle is None:
                   valid_destinations.append(neighbor)
                elif neighbor.vehicle is None:
+                  # if the cell is special destination (school, malls, etc.)
                   special_destinations.append(neighbor)
+                  # each special destination will have probability of attractiveness
                   probabilities.append(neighbor.probability)
-            
-            for i in range(len(probabilities)):
-               if probabilities[i] > random.random():
-                  choice = special_destinations[i]
 
+            # for i in range(len(probabilities)):
+            #    if probabilities[i] > random.random():
+            #       choice = special_destinations[i]
+            # random select new destination for vehicle
+            # based on the probability distribution of surrounding cell
+
+            # random movement of vehicle to new destination
             if not choice:
                if len(valid_destinations) > 0:
+                # random choose a neighbor cell for new destination of the vehicle
                 choice = random.choice(valid_destinations)
 
                 # Move the vehicle to the destination cell unless it's broken
