@@ -49,6 +49,7 @@ class Environment:
             state = vehicle.get_state()
             state_counts[state] += 1
 
+            
             # Get the current cell and its neighbors
             
             current_cell = self.network.get_cell(vehicle.x, vehicle.y)
@@ -74,10 +75,11 @@ class Environment:
                if len(valid_destinations) > 0:
                 choice = random.choice(valid_destinations)
 
-                    # Move the vehicle to the destination cell
-                current_cell.vehicle = None
-                choice.vehicle = vehicle
-                vehicle.x, vehicle.y = choice.x, choice.y
+                # Move the vehicle to the destination cell unless it's broken
+                if state != "Broken down":
+                    current_cell.vehicle = None
+                    choice.vehicle = vehicle
+                    vehicle.x, vehicle.y = choice.x, choice.y
 
         # Format [(Vehicle, new_state)] so all the vehicles are updated together
         apply_list = []
@@ -90,7 +92,7 @@ class Environment:
                 neighbouring_vehicles = []
                 for cell in neighbouring_cells:
                     if cell.vehicle:
-                        neighbouring_vehicles.append(vehicle)
+                        neighbouring_vehicles.append(cell.vehicle)
                 for n_vehicle in neighbouring_vehicles:
                     v_state = n_vehicle.get_state()
                     if state == "Not infected" or state == "Repaired":
